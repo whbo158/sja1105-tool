@@ -16,7 +16,7 @@ usage() {
 # Chassis ETH5: Switch port RGMII 0
 # To LS1021:    Switch port RGMII 4
 #
-sja1105-tool config default ls1021atsn
+/usr/bin/sja1105-tool config default ls1021atsn
 
 O=`getopt -l help,board: -- hb: "$@"` || exit 1
 eval set -- "$O"
@@ -53,13 +53,13 @@ for port in $(seq 0 4); do
 	done
 done
 
-sja1105-tool config modify vlan-lookup-table entry-count 2
+/usr/bin/sja1105-tool config modify vlan-lookup-table entry-count 2
 # Create VLAN ID 100 on switch (configured in
 # /etc/init.d/S45vlan in OpenIL)
-sja1105-tool config modify vlan-lookup-table[1] vmemb_port 0x1F
-sja1105-tool config modify vlan-lookup-table[1] vlan_bc    0x1F
-sja1105-tool config modify vlan-lookup-table[1] vlanid     100
-sja1105-tool config modify vlan-lookup-table[1] tag_port   0x1F
+/usr/bin/sja1105-tool config modify vlan-lookup-table[1] vmemb_port 0x1F
+/usr/bin/sja1105-tool config modify vlan-lookup-table[1] vlan_bc    0x1F
+/usr/bin/sja1105-tool config modify vlan-lookup-table[1] vlanid     100
+/usr/bin/sja1105-tool config modify vlan-lookup-table[1] tag_port   0x1F
 
 scheduler-create << EOF
 {
@@ -112,6 +112,6 @@ EOF
 
 xml_name="${BASH_SOURCE[0]/.sh}-board${board}.xml"
 rm -f ${xml_name}
-sja1105-tool config save ${xml_name}
+/usr/bin/sja1105-tool config save ${xml_name}
 echo "Configuration saved as ${xml_name}."
-echo "View with: \"sja1105-tool config load ${xml_name}; sja1105-tool config show | less\""
+echo "View with: \"/usr/bin/sja1105-tool config load ${xml_name}; /usr/bin/sja1105-tool config show | less\""
