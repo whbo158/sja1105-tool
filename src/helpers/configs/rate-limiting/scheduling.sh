@@ -16,7 +16,7 @@ usage() {
 # Chassis ETH5: Switch port RGMII 0
 # To LS1021:    Switch port RGMII 4
 #
-sja1105-tool config default ls1021atsn
+/usr/bin/sja1105-tool config default ls1021atsn
 
 O=`getopt -l help,flow1-prio:,flow2-prio:,flow1-time-ms:,flow2-time-ms: -- hf:F:t:T: "$@"` || exit 1
 eval set -- "$O"
@@ -49,8 +49,8 @@ done
 # Flow 1 is coming from Board 1. From Board 2's perspective, this
 # is connected to chassis port ETH3 (RGMII 2).
 # Flow 2 is coming from Board 2. This is the internal port RGMII4.
-sja1105-tool config modify mac-config[2] vlanprio ${flow1_prio}
-sja1105-tool config modify mac-config[4] vlanprio ${flow2_prio}
+/usr/bin/sja1105-tool config modify mac-config[2] vlanprio ${flow1_prio}
+/usr/bin/sja1105-tool config modify mac-config[4] vlanprio ${flow2_prio}
 
 # Egress port for both flows is ETH2 (RGMII 1).
 # This port will be configured for Qbv scheduling.
@@ -84,7 +84,7 @@ EOF
 
 xml_name="${BASH_SOURCE[0]/.sh}.xml"
 rm -f ${xml_name}
-sja1105-tool config save ${xml_name}
+/usr/bin/sja1105-tool config save ${xml_name}
 echo "Configuration saved as ${xml_name}."
-echo "View with: \"sja1105-tool config load ${xml_name}; sja1105-tool config show | less\""
+echo "View with: \"/usr/bin/sja1105-tool config load ${xml_name}; /usr/bin/sja1105-tool config show | less\""
 
